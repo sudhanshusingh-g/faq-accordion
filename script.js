@@ -1,14 +1,25 @@
 const accordionButtons = document.querySelectorAll(".accordion_button");
-const accordionTexts = document.querySelectorAll(".faq_content");
+const accordionItems = document.querySelectorAll(".accordion_item");
 
-console.log(accordionTexts);
+accordionButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    const isOpen = accordionItems[index].classList.contains("active");
 
+    // Close all other accordion items
+    accordionItems.forEach((item) => {
+      item.classList.remove("active");
+      item.querySelector(".faq_content").style.display = "none";
+      item.querySelector(".accordion_button img").src =
+        "./assets/images/icon-plus.svg";
+    });
 
-accordionButtons.forEach((button)=>{
-    button.addEventListener("click",()=>{
-        button.innerHTML="<img src=\"./assets/images/icon-minus.svg\" alt=\"plus icon\" width=\"24\" height=\"24\">\n";
-        accordionTexts.forEach((text)=>{
-            text.style.display="block";
-        })
-    })
-})
+    // Toggle the clicked accordion item
+    if (!isOpen) {
+      accordionItems[index].classList.add("active");
+      accordionItems[index].querySelector(".faq_content").style.display =
+        "block";
+      accordionItems[index].querySelector(".accordion_button img").src =
+        "./assets/images/icon-minus.svg";
+    }
+  });
+});
